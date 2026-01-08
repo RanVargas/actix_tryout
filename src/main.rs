@@ -9,7 +9,7 @@ use dotenv::dotenv;
 use env_logger::Env;
 use std::env;
 
-use routes::user_routes::init;
+use routes::user_routes::config as user_config;
 
 use crate::db::initialize_db_pool;
 
@@ -29,7 +29,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(pool.clone()))
             .wrap(Logger::default())
             .wrap(Logger::new("%a %t %r %s %b"))
-            .configure(init) // Initialize routes
+            .configure(user_config) // Initialize routes
     })
     .bind(format!("{}:{}", host, port))?
     .run()
